@@ -80,7 +80,7 @@ Class RyuBot{
 	{
 		
 
-		$setup = [CURLOPT_URL => 'http://7inc.store:5758/?api='.$method.'&'.http_build_query($param),
+		$setup = [CURLOPT_URL => 'http://7inc.store/xapi/?api='.$method.'&'.http_build_query($param),
 				 CURLOPT_RETURNTRANSFER=>true,
 				 CURLOPT_USERAGENT=>'RyuBots',
 				 CURLOPT_SSL_VERIFYPEER=>false
