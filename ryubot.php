@@ -62,7 +62,7 @@ Class RyuBot{
 		$this->config['direct']['by_country']['US'] = 'https://google.us';
 
 		// This is example code direct by country MASS URLs and access by random.
-		$this->config['direct']['by_country']['CA'][0] = 'https://w3schools.com'
+		$this->config['direct']['by_country']['CA'][0] = 'https://w3schools.com';
 		
 		$this->config['direct']['by_country']['CA'][1] = 'https://php.net';
 
@@ -151,7 +151,7 @@ Class RyuBot{
 
 			if(in_array($this->ip,$gt))
 			{
-				@header('location: '.$this->config['direct']['onetime'],true,303);
+				@header('location: '.$this->config['direct']['onetime'],true,303);exit;
 			}else{
 				file_put_contents($file,$this->ip."\n",FILE_APPEND);
 			}
