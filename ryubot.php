@@ -173,7 +173,7 @@ Class RyuBot{
 		{
 
 			/** checking if using mass random direct **/
-			if(in_array($this->config['direct']['by_country'][$code]))
+			if(in_array($code,$this->config['direct']['by_country'][$code]))
 			{
 				@header('location: '.$this->randomUri($this->config['direct']['by_country'][$code]),true,303);
 				exit;
