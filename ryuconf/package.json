@@ -1,0 +1,32 @@
+{
+  "name": "ryuconf",
+  "version": "1.0.21",
+  "description": "RyuBot config generator",
+  "main": "gui.js",
+  "scripts": {
+    "test": "test",
+    "start": "(nodemon server.js) & electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7incsoft/ryubot.git"
+  },
+  "keywords": [
+    "ryuconf"
+  ],
+  "author": "bapakmu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/7incsoft/ryubot/issues"
+  },
+  "homepage": "https://github.com/7incsoft/ryubot#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "debug": "^4.3.1",
+    "ejs": "^3.1.5",
+    "electron": "^11.2.3",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "morgan": "^1.10.0"
+  }
+}

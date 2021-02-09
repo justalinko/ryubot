@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>:: RyuConf ::</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+<%
+ function select_bool(ceked,name)
+ {
+ 	var temp = "<select name='"+name+"' id='"+name+"'>";
+ 	if(ceked == 1)
+ 	{
+ 		 temp +="<option value='1' checked>TRUE</option>";
+ 		 temp +="<option value='0' >FALSE</option>";
+ 	}else{
+ 		 temp +="<option value='1' >TRUE</option>";
+ 		 temp +="<option value='0' checked>FALSE</option>";
+ 		
+ 	}
+ 	 temp += "</select>";
+ 	return temp;
+ }
+ function form_input(value,name)
+ {
+ 	var temp = "<input type='text' name='"+name+"' value='"+value+"' class='input' />";
+ 	return temp;
+ }
+%>
+
+<div class="container">
+	<h3 style="text-align:center">RyuConf</h3>
+	<small>RyuBot Config Generator</small>
+	<hr>
+	<form method="post" action="/generate">
+	<table width="100%" >
+		<tr><td>LOG BOT</td><td>
+			<%- select_bool('1','log_bot'); %>
+		</td><td>LOG VISITOR</td><td>
+			<%- select_bool('1','log_visitor'); %>
+		</td></tr>
+		<tr><td>ONE TIME ACCESS</td><td>
+			<%- select_bool('1','one_time_access'); %>
+		</td><td>BLOCK BOT</td><td>
+			<%- select_bool('1','bot'); %>
+		</td></tr>
+	</table>
+	<br>
+	<table width="100%">
+		<tr><td>DIRECT DEFAULT</td>
+			<td><%- form_input('https://xalinko.com/_.php?e=DEFAULT-PAGE', 'direct_default'); %></td></tr>
+			<tr>
+			<td>DIRECT ONETIME</td>
+			<td><%- form_input('https://xalinko.com/_.php?e=ONETIME-PAGE', 'direct_onetime'); %></td>
+		</tr><tr>
+			<td>DIRECT BOT</td>
+			<td><%- form_input('https://xalinko.com/_.php?e=BOT-DETECTED', 'direct_bot'); %></td>
+
+		</tr>
+		<tr><td colspan="2">DIRECT BY COUNTRY RULES</td></tr>
+		<tr id="rulexx">
+			
+			<td style="width:20%"><%- form_input('US','by_country_code'); %></td>
+			<td style="width:60%"><%- form_input('https://xalinko.com/_.php?e=DETECT-COUNTRY-US','by_country_value'); %></td>
+
+		
+		</tr>
+<tr><td colspan="2">
+	<input type="submit" name="submit" value="Generate config" class="input" >
+</td></tr>
+	</table>
+</form>
+	<br><br><a href="javascript:;" onClick="create_rules()" style="border:1px solid #eee;text-decoration:none;padding:6px;color:#0f0">ADD RULE</a>
+</div>
+
+<script type="text/javascript">
+	function create_rules()
+{
+	var tpl = '<td style="width:20%">';
+	tpl += "<input type='text' name='by_country_code' value='CountryCode' class='input' />";
+	tpl += '</td><td style="width:60%">';
+	tpl += "<input type='text' name='by_country_value' value='direct_link' class='input' />";
+	tpl += '</td>';
+
+
+	document.getElementById('rulexx').insertAdjacentHTML('afterend',tpl);
+}
+</script>
+</body>
+</html>
