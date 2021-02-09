@@ -35,7 +35,7 @@ router.post('/' , function(req,res,next){
 					by_country: ByCon
 				}
 
-	console.log(JSON.beautify(template));
+	// console.log(JSON.beautify(template));
 
 
 
