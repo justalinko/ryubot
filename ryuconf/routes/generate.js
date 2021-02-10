@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var lodash = require('lodash');
 
 router.post('/' , function(req,res,next){
 	var post = req.body;
@@ -14,12 +15,18 @@ router.post('/' , function(req,res,next){
 
 	var catchCode = post.by_country_code;
 	var catchVal = post.by_country_value;
+	var ByCon = {};
+	
+	/**
+	* I want to ouput like :
+	* {US: ["link1","link2"] , ID: ["link1","link2"]}
+	* When key is @var catchCode
+	* and Value is @var catchVal
+	*/
+	var x = _.groupBy(catchCode,Math.floor);
 
-	var ByCon = catchVal.map(function(obj,index){
-		var myObj = {};
-		myObj[catchCode[index]]= obj;
-		return myObj;
-	});
+	console.log(x);
+
 	var template = {log_bot: log_bot ,
 					log_visitor: log_visitor,
 					one_time_access: one_time,
@@ -33,13 +40,14 @@ router.post('/' , function(req,res,next){
 						onetime: onetime
 					},
 					by_country: ByCon
+				
 				}
 
-	// console.log(JSON.beautify(template));
+	// console.log(template);
 
 
 
-	res.send('holla');
+	res.send(template);
 });
 
 module.exports = router;

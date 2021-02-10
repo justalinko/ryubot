@@ -3,10 +3,7 @@ const { app,BrowserView, BrowserWindow, Menu} = require('electron')
 function createWindow()
 {
 	const win = new BrowserWindow({
-		width:800,
-		height:600,
-		resizeable:true,
-		maximizable:true
+		useContentSize:true
 	});
 
 	const view = new BrowserView();
