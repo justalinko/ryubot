@@ -35,7 +35,7 @@ $scan = scandir($base);
 		if(!preg_match("/log/",$dir))continue;
 		?>
 
-	<div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 mt-2">
+	<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mt-2">
 		<h3><?=$dir;?></h3>
 		<textarea class="form-control" style="width: 100%;height: 300px"><?=@file_get_contents($base.'/'.$dir);?></textarea>
 	</div>
