@@ -79,9 +79,25 @@ Class RyuBot{
 		/** CONFIGURATION END **/
 		/** DON'T CHANGE ANYTHING START FROM HERE **/
 		/** if error is not our responsibility **/
-		$this->ip = $_SERVER['REMOTE_ADDR'];
+		
+		/** TEST **/
+		#$this->ip = '8.8.8.8';
+		#$this->ua = 'googlebot';
+		/** END TEST **/
+
+		/** GET REAL IP AND USERAGENT **/
+		$this->ip = $this->realIP();
 		$this->ua = $_SERVER['HTTP_USER_AGENT'];
 	}
+	 public function realIP() {
+    if (filter_var(@$_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP)) {
+      return $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (filter_var(@$_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
+      return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+      return $_SERVER['REMOTE_ADDR'];
+    }
+  }
 	public function api()
 	{
 		$this->api_url[0] = 'http://extreme-ip-lookup.com/json/'.$this->ip;
@@ -124,7 +140,7 @@ Class RyuBot{
 		$get =$this->get(0);
 		return $get['countryCode'];
 	}
-	public function is_bot($code)
+	public function secure_init($code)
 	{
 		$get = $this->get(1);
 		$bot = false;
@@ -156,19 +172,25 @@ Class RyuBot{
 			}
 
 		}else{
+
+			
 			if($this->config['log_visitor'] == true)
 			{
-				if($this->one_time('bool') == true){
-					$alert = 'ONE TIME VISITOR';
+				if($this->onetime())
+				{
+					$alert = 'ONETIME VISITOR';
 				}else{
-					if($bot == true)
-					{
-						$alert = 'BOT VISITOR';
-					}else{
-						$alert = 'REAL VISITOR';
-					}
+					$alert = 'REAL VISITOR';
 				}
 				$this->ryulogs('ryu-visitor.log',$alert.' [ '.$code.' ] |'.$this->ip .'|'.$this->ua."\n");
+			}
+			if($this->config['one_time_access'] == true)
+			{
+				if($this->onetime())
+				{
+					@header('location: '.$this->config['direct']['onetime'],true,303);
+					exit;
+				}
 			}
 		}
 	}
@@ -191,7 +213,7 @@ Class RyuBot{
 
 		return count($ex);
 	}
-	public function one_time($return = 'direct')
+	public function onetime()
 	{
 		$file = 'onetime.log';
 		if(!file_exists('ryulogs/'.$file))
@@ -199,19 +221,16 @@ Class RyuBot{
 			$this->ryulogs($file,$this->ip."\n");
 		}else{
 	
-			$gt = explode("\n",file_get_contents($file));
-
+			$gt = explode("\n",file_get_contents('ryulogs/'.$file));
+			print_r($gt);
 			if(in_array($this->ip,$gt))
 			{
-				if($return == 'direct'){
-				@header('location: '.$this->config['direct']['onetime'],true,303);
-				}else{
-					return true;
-				}
+				return true;
 			}else{
 				$this->ryulogs($file,$this->ip."\n");
 			}
 		}
+		return ;
 	}
 	public function run()
 	{
@@ -225,12 +244,9 @@ Class RyuBot{
 
 		$code = $this->getCountry();
 
-		$this->is_bot($code);
+		$this->secure_init($code);
 
-		if($this->config['one_time_access'] == true)
-		{
-			$this->one_time('direct');
-		}
+		
 
 		if(array_key_exists($code, $this->config['direct']['by_country']))
 		{
